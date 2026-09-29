@@ -1,0 +1,44 @@
+name: Publish to Applause
+description: Publish a plugin release to the Applause registry.
+author: Applause
+branding:
+  icon: upload-cloud
+  color: red
+
+inputs:
+  package:
+    description: 'Package slug, "org/package".'
+    required: true
+  manifest:
+    description: Path to the manifest template.
+    default: applause.yaml
+  version:
+    description: 'Version to publish. Defaults to the release tag with any leading "v" removed.'
+    required: false
+  registry:
+    description: Applause base URL.
+    default: https://applause.example
+  token:
+    description: >
+      An Applause publish token. Leave empty to use trusted publishing (GitHub
+      OIDC), which needs `permissions: id-token: write` and the repository and
+      workflow registered as a trusted publisher for the scope.
+    required: false
+  wait:
+    description: Wait until the version is published or fails.
+    default: 'true'
+  dry-run:
+    description: Resolve and validate the manifest, print it, and stop.
+    default: 'false'
+
+outputs:
+  status:
+    description: 'Final status: published, ingest_failed, or ingesting (if wait timed out or is off).'
+  page-url:
+    description: URL of the package page on Applause.
+  manifest:
+    description: The resolved manifest YAML.
+
+runs:
+  using: node24
+  main: dist/index.js
