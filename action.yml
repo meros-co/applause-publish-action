@@ -25,7 +25,7 @@ inputs:
       workflow registered as a trusted publisher for the scope.
     required: false
   wait:
-    description: Wait until the version is published or fails.
+    description: Wait until the version is published or fails (up to 15 minutes).
     default: 'true'
   dry-run:
     description: Resolve and validate the manifest, print it, and stop.

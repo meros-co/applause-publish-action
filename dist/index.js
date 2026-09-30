@@ -13543,7 +13543,6 @@ var CommerceValidator = external_exports.object({
   base_price_usd: external_exports.number().positive().max(1e5).refine((n) => Number.isInteger(Math.round(n * 100)) && Math.abs(n * 100 - Math.round(n * 100)) < 1e-9, {
     message: "Price must have at most two decimal places"
   }),
-  regional_pricing: external_exports.boolean().optional(),
   entitlement_tier: external_exports.enum(["gated", "vendor_managed"]),
   demo_url: external_exports.string().url().optional()
 });
@@ -17807,7 +17806,7 @@ function checkApplauseRules(manifest, ext, version) {
     }
   });
   if (ext.wrappers_allowed && !declaredFormats.has("clap")) {
-    issues.push(warning("x-applause.wrappers_allowed", "wrappers_allowed has no effect without a CLAP identity \u2014 wrappers are generated from CLAP only.", "wrappers_without_clap"));
+    issues.push(warning("x-applause.wrappers_allowed", "wrappers_allowed is reserved and has no effect yet.", "wrappers_without_clap"));
   }
   return issues;
 }
@@ -18083,7 +18082,7 @@ async function run() {
   output("status", status);
   console.log(`Status: ${status}`);
   if (status === "ingest_failed") {
-    throw new Error(`Ingest failed: ${final.failure?.message ?? "see the Applause publisher portal."}`);
+    throw new Error(`Publishing failed: ${final.failure?.message ?? "see the Applause publisher portal."}`);
   }
   if (status !== "published") annotate("warning", "The release is still being checked; see the Applause publisher portal for the result.");
 }

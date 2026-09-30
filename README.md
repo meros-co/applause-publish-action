@@ -65,5 +65,5 @@ fails with the reason if a check fails.
 | `version` | tag without `v` | Must be strict semver |
 | `registry` | `https://applause.example` | The Applause site |
 | `token` | — | Publish token; omit for trusted publishing |
-| `wait` | `true` | Wait for publish or failure |
+| `wait` | `true` | Wait for publish or failure, for up to 15 minutes |
 | `dry-run` | `false` | Resolve, validate, print; do not submit |
