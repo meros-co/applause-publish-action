@@ -9422,11 +9422,11 @@ function isValidClapId(id) {
 function isValidVst3Cid(id) {
   return VST3_CID_RE.test(id);
 }
-function normaliseIdentifier(format, id) {
+function normalizeIdentifier(format, id) {
   return format === "vst3" ? id.toUpperCase() : id;
 }
 function identityKey(identity) {
-  return `${identity.format}:${normaliseIdentifier(identity.format, identity.id)}`;
+  return `${identity.format}:${normalizeIdentifier(identity.format, identity.id)}`;
 }
 function findDuplicateIdentities(identities) {
   const seen = /* @__PURE__ */ new Set();
@@ -17744,7 +17744,7 @@ var RegistryType;
 })(RegistryType || (RegistryType = {}));
 
 // ../core/dist/rules.js
-var COPYLEFT_LICENCES = /* @__PURE__ */ new Set([
+var COPYLEFT_LICENSES = /* @__PURE__ */ new Set([
   License.GNUAfferoGeneralPublicLicensev3,
   // agpl-3.0
   License.GNUGeneralPublicLicensev2,
@@ -17756,8 +17756,8 @@ var COPYLEFT_LICENCES = /* @__PURE__ */ new Set([
   License.GNULesserGeneralPublicLicensev3
   // lgpl-3.0
 ]);
-function isCopyleftLicence(licence) {
-  return COPYLEFT_LICENCES.has(licence);
+function isCopyleftLicense(license) {
+  return COPYLEFT_LICENSES.has(license);
 }
 function isStrictSemver(version) {
   if (version !== version.trim())
@@ -17784,13 +17784,13 @@ function checkApplauseRules(manifest, ext, version) {
   for (const key of duplicates) {
     issues.push(error("x-applause.plugins", `Duplicate plugin identity "${key}"`, "duplicate_identity"));
   }
-  const licence = typeof manifest.license === "string" ? manifest.license : void 0;
+  const license = typeof manifest.license === "string" ? manifest.license : void 0;
   if (ext.commerce) {
-    if (licence && isCopyleftLicence(licence)) {
-      issues.push(error("x-applause.commerce", `A paid listing may not declare a copyleft licence ("${licence}"). Copyleft packages may be listed free of charge only.`, "paid_copyleft_licence"));
+    if (license && isCopyleftLicense(license)) {
+      issues.push(error("x-applause.commerce", `A paid listing may not declare a copyleft license ("${license}"). Copyleft packages may be listed free of charge only.`, "paid_copyleft_license"));
     }
-    if (licence && licence !== License.Other && !isCopyleftLicence(licence)) {
-      issues.push(warning("license", `Paid listing declares an open-source licence ("${licence}"). If the plugin is proprietary, use "other" until OAS gains a "proprietary" value.`, "paid_open_source_licence"));
+    if (license && license !== License.Other && !isCopyleftLicense(license)) {
+      issues.push(warning("license", `Paid listing declares an open-source license ("${license}"). If the plugin is proprietary, use "other" until OAS gains a "proprietary" value.`, "paid_open_source_license"));
     }
     if (!ext.commerce.demo_url) {
       issues.push(warning("x-applause.commerce.demo_url", "No demo_url. Applause cannot issue trials, so buyers have no way to try this plugin before purchase.", "no_demo_url"));
